@@ -77,7 +77,7 @@ int main()
         {
           int pontos_obtidos = 0;
           contagem_pontos(jogadores, numero_jogadores, pontos_jogadores, &jogador_ganhador, &pontos_obtidos);
-          printf("PARABENS JOGADOR %d !!\nOBTEVE %d PONTOS\n",jogador_ganhador, pontos_obtidos); //ANUNCIA GANHADOR (AQUELE COM MENOS PONTOS NA MAO (0 CASO TENHA ESVAZIADO A MAO))
+          printf("\n\nPARABENS JOGADOR %d !!\nOBTEVE %d PONTOS\n",jogador_ganhador, pontos_obtidos); //ANUNCIA GANHADOR (AQUELE COM MENOS PONTOS NA MAO (0 CASO TENHA ESVAZIADO A MAO))
           system("PAUSE");
           break;
         }

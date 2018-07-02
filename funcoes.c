@@ -13,6 +13,25 @@
 #define ROSA 13
 #define AMARELO 14
 
+//FUNCOES TESTE
+void imprimir_mao(t_mao jogadores[], int numero_jogadores) //FUNCAO-TESTE
+{
+    int i;
+    int j;
+    for(i = 0; i<numero_jogadores; i++)
+    {
+        system("cls");
+        printf("JOGADOR %d\n", i+1);
+        for(j = 0; j<106; j++)
+        {
+            if(jogadores[i].carta[j].valor == '0')
+            {break;}
+            printf("CARTA %d: %c%c\n", j+1, jogadores[i].carta[j].valor, jogadores[i].carta[j].naipe);
+        }
+        system("PAUSE");
+    }
+}
+
 //FUNCOES
 void tres_pontinhos()
 {
@@ -458,17 +477,11 @@ int manipular_mesa(t_mesa mesa[],int monte_1,int monte_2,int posicao_monte_1,int
             return 3; //MONTE ESTA CHEIO
         }
     }
-    //MUDA A POSICAO
+    //PEGA A PECA
+    t_carta peca;
+    peca.valor = mesa[monte_1].carta[posicao_monte_1].valor;
+    peca.naipe = mesa[monte_1].carta[posicao_monte_1].naipe;
     int pos;
-    //DESLOCA AS PECAS DO SEGUNDO MONTE PARA REBER A NOVA PECA NA POSICAO CORRETA
-    for(pos = 12; pos > posicao_monte_2; pos--)
-    {
-        mesa[monte_2].carta[pos].valor = mesa[monte_2].carta[pos-1].valor; //DESLOCA TODAS PARA A ESQUERDA
-        mesa[monte_2].carta[pos].naipe = mesa[monte_2 ].carta[pos-1].naipe;
-    }
-    //COLOCA A PECA
-    mesa[monte_2].carta[posicao_monte_2].valor = mesa[monte_1].carta[posicao_monte_1].valor;
-    mesa[monte_2].carta[posicao_monte_2].naipe = mesa[monte_1].carta[posicao_monte_1].naipe;
     //AJEITA O MONTE ANTIGO
     mesa[monte_1].carta[posicao_monte_1].valor = '0';
     mesa[monte_1].carta[posicao_monte_1].naipe = '0';
@@ -477,6 +490,15 @@ int manipular_mesa(t_mesa mesa[],int monte_1,int monte_2,int posicao_monte_1,int
         mesa[monte_1].carta[pos].valor =  mesa[monte_1].carta[pos+1].valor;
         mesa[monte_1].carta[pos].naipe =  mesa[monte_1].carta[pos+1].naipe;
     }
+    //DESLOCA AS PECAS DO SEGUNDO MONTE PARA REBER A NOVA PECA NA POSICAO CORRETA
+    for(pos = 12; pos > posicao_monte_2; pos--)
+    {
+        mesa[monte_2].carta[pos].valor = mesa[monte_2].carta[pos-1].valor; //DESLOCA TODAS PARA A ESQUERDA
+        mesa[monte_2].carta[pos].naipe = mesa[monte_2 ].carta[pos-1].naipe;
+    }
+    //COLOCA A PECA
+    mesa[monte_2].carta[posicao_monte_2].valor = peca.valor;
+    mesa[monte_2].carta[posicao_monte_2].naipe = peca.naipe;
     return 0;
 }
 
@@ -515,7 +537,7 @@ int conferir_jogada(t_mao jogadores[], t_mao jogadores_back[], t_mesa mesa[], in
             }
             if(n_cartas < 3) //SE TEM MENOS DE 3 CARTAS, NAO VALE
             {
-                printf("RETORNO 1");
+
                 return -1; //MONTE INVALIDO
             }
 
@@ -706,7 +728,7 @@ int conferir_jogada(t_mao jogadores[], t_mao jogadores_back[], t_mesa mesa[], in
                     continue; //EH UMA SEQUENCIA VALIDA
                 }
             }
-            printf("RETORNO 2 - monte %d", monte);
+
             return -1; //SE CHEGOU AQUI (NAO PASSOU EM NENHUM DOS TESTES), MONTE INVALIDO
         } //SE SAIU DESSE LOOP, TODOS OS MONTES SAO VALIDOS!
     }
@@ -728,38 +750,38 @@ int conferir_jogada(t_mao jogadores[], t_mao jogadores_back[], t_mesa mesa[], in
     }
     if(numero_cartas_atual > numero_cartas_antes)
     {
-        printf("RETORNO 3");
+
         return -1; //JOGADA INVALIDA! JOGADOR NAO PODE RECEBER MAIS CARTAS (ANTES DE COMPRAR)
     }
     //CONTA QUANTAS PECAS DE CADA TIPO A MAO ATUAL POSSUI, E COMPARA SE ELAS EXISTIAM ANTERIORMENTE
     int numero_atual;
     int numero_antes;
     char valor, naipe;
-    int j = 0;
+    int j;
     i = 0;
-    while(i<106 && jogadores[jogador_atual].carta[i].valor != '0') //TESTA PARA TODAS AS CARTAS
+    while(i<106 && jogadores[jogador_atual].carta[i].valor != '0') //EXECUTA O TESTE PARA TODAS AS CARTAS NAO NULAS DA MAO ATUAL DO JOGADOR
     {
         valor = jogadores[jogador_atual].carta[i].valor;
         naipe = jogadores[jogador_atual].carta[i].naipe;
-        while(j<106 && jogadores[jogador_atual].carta[j].valor != '0')
+        j = 0;
+        numero_atual = 0;
+        numero_antes = 0;
+        while(j<106) //FAZ A CONTAGEM DESSA CARTA NA MAO ATUAL E NA ANTIGA, COMPARA VALORES
         {
-            numero_atual = 0;
-            numero_antes = 0;
             if(jogadores[jogador_atual].carta[j].valor == valor && jogadores[jogador_atual].carta[j].naipe == naipe) //CONTA QUANTAS CARTAS IGUAIS A ESSA EXISTEM ATUALMENTE
             {
                 numero_atual ++;
             }
-            if(jogadores_back[jogador_atual].carta[j].valor == valor && jogadores[jogador_atual].carta[j].naipe == naipe) //CONTA QUANTAS CARTAS IGUAIS A ESSA EXISTIAM ANTES
+            if(jogadores_back[jogador_atual].carta[j].valor == valor && jogadores_back[jogador_atual].carta[j].naipe == naipe) //CONTA QUANTAS CARTAS IGUAIS A ESSA EXISTIAM ANTES
             {
-                numero_antes ++;
-            }
-            if(numero_atual > numero_antes)
-            {
-                printf("ANT: %d DEPS: %d\nRETORNO 4\n", numero_antes, numero_atual); //TA DANDO RUIM AQUIII
-                return -1; //JOGADA INVALIDA! JOGADOR NAO PODE POSSUIR CARTA QUE NAO POSSUIA ANTES
+                numero_antes ++; //AQUI TA COM PROBLEMA!! NAO TA CONTANDO DIREITO O NUMERO DE CARTAS ANTES
             }
             j++;
         }
+        if(numero_atual > numero_antes) //SE AGORA TEM MAIS DELAS DO QUE ANTES, JOGADA INVALIDA
+            {
+                return -1; //JOGADA INVALIDA! JOGADOR NAO PODE POSSUIR CARTA QUE NAO POSSUIA ANTES
+            }
         i++;
     }
 
