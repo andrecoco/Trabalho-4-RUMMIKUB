@@ -27,9 +27,14 @@ int main()
     system("cls");
 
     //CRIANDO/INICIALIZANDO O MONTE DE CARTAS
+	int flag_arquivo;
     t_carta monte_baralho[106]; //CRIA O MONTE
-    embaralhar_monte(monte_baralho); //CRIA O MONTE EMBARALHADO (DE ARQUIVO OU RANDOM)
-
+    flag_arquivo = embaralhar_monte(monte_baralho); //CRIA O MONTE EMBARALHADO (DE ARQUIVO OU RANDOM)
+	if(flag_arquivo == 1)
+	{
+		return -1;
+	}
+	
     //PREPARACAO PARA INICIO DO JOGO
     int numero_jogadores;
     while(true)

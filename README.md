@@ -12,5 +12,6 @@ Caso queira compilar o programa, o relatório possui mais informações.
 
 OBSERVAÇÕES:
 Programa feito somente para WINDOWS.
+O arquivo "baralho_ordenado.txt" é utilizado pelo programa para embaralhar o monte.
 
 LEIA O RELATÓRIO PARA MAIS INFORMAÇÕES SOBRE O PROGRAMA, OU PARA VER O TUTORIAL DE COMO USÁ-LO.
