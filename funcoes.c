@@ -462,7 +462,7 @@ int manipular_mesa(t_mesa mesa[],int monte_1,int monte_2,int posicao_monte_1,int
         return 1; //PECA NAO EXISTE
     }
     //VERIFICA SE A POSICAO DESTINO EH VALIDA (DEVE SER NO INICIO, MEIO, OU NA ULTIMA POSICAO NAO-NULA DE UM MONTE)
-    if(posicao_monte_2 != 0 && mesa[monte_2].carta[posicao_monte_2 - 1].valor == 0) //CASO O VALOR ANTES SEJA NULO
+    if(posicao_monte_2 != 0 && mesa[monte_2].carta[posicao_monte_2 - 1].valor == '0') //CASO O VALOR ANTES SEJA NULO
     {
         return 2; //POSICAO INVALIDA
     }
