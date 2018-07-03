@@ -1,6 +1,8 @@
 # Trabalho 4 RUMMIKUB
+
 Grupo: 
 (P = 0) André Bermudes Viana - 10684580
+(P = 1) Lucas Gabriel Mendes Miranda – 10265892 
 
 INTRODUÇÃO:
 Romeu_Cubo é um programa para se jogar Rummikub, a única diferença com o jogo original é que todos os jogadores podem ver as "mãos" dos outros.
