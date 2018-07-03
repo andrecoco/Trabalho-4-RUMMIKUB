@@ -466,7 +466,11 @@ int manipular_mesa(t_mesa mesa[],int monte_1,int monte_2,int posicao_monte_1,int
     {
         return 2; //POSICAO INVALIDA
     }
-
+	//VERIFICA SE O MONTE ANTERIOR EXISTE (SE MONTE DE DESTINO É VALIDO)
+	if((monte_2 < 0 || monte_2 > 34) || mesa[monte_2 - 1].carta[0].valor == '0') //SE O MONTE ANTERIOR N EXISTIR (OU O MONTE DESTINO FOR INVALIDO)
+	{
+		return 3; //MONTE DE DESTINO INVALIDO
+	}
     //VERIFICAR SE MONTE "DESTINO" ESTA CHEIO
     int i = 0;
     while(mesa[monte_2].carta[i].valor != '0')
@@ -474,7 +478,7 @@ int manipular_mesa(t_mesa mesa[],int monte_1,int monte_2,int posicao_monte_1,int
         i++;
         if(i == 13) //POSICAO 13 NAO EXISTE NA MESA (TEM NO MAX 13 CARTAS)
         {
-            return 3; //MONTE ESTA CHEIO
+            return 4; //MONTE ESTA CHEIO
         }
     }
     //PEGA A PECA
@@ -969,9 +973,14 @@ int jogada(t_carta monte_baralho[], t_mao jogadores[], t_mesa mesa[],int numero_
                 printf("POSICAO DE DESTINO INVALIDA");
                 tres_pontinhos();
             }
-            if(flag == 3) //MONTE DE DESTINO CHEIO
+            if(flag == 3) //MONTE INVALIDO
             {
-                printf("MONTE DE DESTINO CHEIO");
+                printf("MONTE INVALIDO");
+                tres_pontinhos();
+            }
+			if(flag == 4) //MONTE CHEIO
+            {
+                printf("MONTE DE DESTINO ESTA CHEIO");
                 tres_pontinhos();
             }
             continue;
